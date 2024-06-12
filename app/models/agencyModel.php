@@ -69,3 +69,51 @@ function createPackage($title, $description, $services, $destinations, $persons,
 
 
 }
+
+function getAllPackages()
+{
+    try {
+        $conn = connectDB();
+        $user_id = $_SESSION['user']['user_id'];
+        $travel_agency_id = getAgencyIdFromUserId($user_id);
+        $stmt = $conn->query("SELECT * FROM vp where travel_agency_id = $travel_agency_id");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        $e->getMessage();
+        return null;
+    }
+}
+
+
+function singlePackage()
+{
+    if (isset($_GET['vp_id'])) {
+        $vp_id = $_GET['vp_id'];
+
+
+
+        $conn = connectDB();
+        $stmt = $conn->prepare("SELECT * FROM vp WHERE vp_id = $vp_id");
+        $stmt->execute();
+
+        return $package = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+}
+
+function getVpInfo()
+{
+    $conn = connectDB();
+    $vp_id = $_GET['vp_id'];
+    $query = "
+            SELECT DISTINCT s.description AS service_description, d.name AS destination_name
+            FROM vp_info vp
+            JOIN services s ON vp.services_id = s.service_id
+            JOIN destinations d ON vp.destination_id = d.destination_id
+            WHERE vp.vp_id = $vp_id
+        ";
+    $stmt = $conn->query($query);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $results;
+}

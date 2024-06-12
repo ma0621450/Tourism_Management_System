@@ -10,4 +10,7 @@ $destinations = getAllDestinations();
 
 $services = getAllServices();
 
+$packages = getAllPackages();
+
+
 require ("app/views/agency/packages.view.php");

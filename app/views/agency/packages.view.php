@@ -5,18 +5,21 @@ require ("app/views/partials/header.php");
     Create Packages
 </button>
 <div class="packages-cards d-flex justify-content-around">
+    <?php foreach ($packages as $package): ?>
 
-    <div class="m-4 border  rounded border-muted border-2" style="width: 20rem;">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAh02ZiYBmSOMvLGUE3S22Tw-4Mbg_1Xpdg&s"
-            class="card-img-top" alt="...">
-        <div class="card-body p-2">
-            <h5 class="card-title">Las Vegas</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <p class="text-secondary">Price: $123</p>
+        <div class="m-4 border  rounded border-muted border-2" style="width: 20rem;">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAh02ZiYBmSOMvLGUE3S22Tw-4Mbg_1Xpdg&s"
+                class="card-img-top" alt="...">
+            <div class="card-body p-2">
+                <a href="single_package?vp_id=<?php echo $package['vp_id']; ?>" class="card-link">
+                    <h5 class="card-title"><?php echo $package['title']; ?></h5>
+                </a>
+                <p class="card-text"><?php echo $package['description']; ?></p>
+                <p class="text-secondary">Price: $<?php echo $package['price']; ?></p>
+            </div>
         </div>
-    </div>
 
+    <?php endforeach; ?>
 </div>
 
 
@@ -36,7 +39,7 @@ require ("app/views/partials/header.php");
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Description</label>
-                        <input type="text" name="description" class="form-control">
+                        <textarea type="text" name="description" class="form-control"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="">Services</label>
