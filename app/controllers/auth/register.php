@@ -1,7 +1,6 @@
 <?php
 
 require_once ("app/models/auth/register.php");
-require_once ("app/views/register.php");
 
 
 
@@ -27,3 +26,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "User creation failed!";
     }
 }
+
+require_once ("app/views/register.php");

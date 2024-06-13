@@ -1,9 +1,9 @@
 <?php
 require ("app/views/partials/header.php");
 ?>
-<div class="packages-cards d-flex justify-content-around">
+<div class="packages-cards d-flex flex-wrap">
     <?php foreach ($packages as $package) { ?>
-        <div class="m-4 border  rounded border-muted border-2" style="width: 21rem;">
+        <div class="m-4 border  rounded border-muted " style="width: 20rem;">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAh02ZiYBmSOMvLGUE3S22Tw-4Mbg_1Xpdg&s"
                 class="card-img-top" alt="...">
             <div class="card-body p-2">

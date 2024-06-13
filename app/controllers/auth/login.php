@@ -1,5 +1,4 @@
 <?php
-require 'app/views/login.php';
 require 'app/models/auth/login.php';
 
 
@@ -16,9 +15,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["user"]['user_id'] = $user['user_id'];
         $_SESSION["user"]['role_id'] = $user['role_id'];
         $_SESSION["user"]['email'] = $user['email'];
-        print_r($_SESSION['user']);
-        header("location: /Vacation_Management/");
+
+        if ($user['role_id'] == 1) {
+            header('location: admin');
+        } else if ($user['role_id'] == 2) {
+            header('location: Agency_Packages');
+        } else if ($user['role_id'] == 3 || !$role) {
+            header('location: /Vacation_Management/');
+        }
 
     }
 
 }
+
+require 'app/views/login.php';

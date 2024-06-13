@@ -117,3 +117,94 @@ function getVpInfo()
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $results;
 }
+
+function getBookingsOfTravelAgencies()
+{
+    try {
+        $conn = connectDB();
+        $user_id = $_SESSION['user']['user_id'];
+        $travel_agency_id = getAgencyIdFromUserId($user_id);
+
+        $sql = "
+       SELECT 
+    b.id,
+    vp.vp_id,
+    vp.title,
+    vp.description,
+    vp.persons,
+    vp.price,
+    vp.start_date,
+    vp.end_date
+FROM 
+    bookings b
+JOIN 
+    vp ON b.vp_id = vp.vp_id
+WHERE 
+    vp.travel_agency_id = $travel_agency_id
+ORDER BY 
+    vp.start_date ASC";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $bookings;
+
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return null;
+    }
+}
+
+
+function getInquiries()
+{
+    try {
+        $conn = connectDB();
+        $user_id = $_SESSION['user']['user_id'];
+        $travel_agency_id = getAgencyIdFromUserId($user_id);
+        $sql_insert_inquiry = "
+        SELECT 
+    it.id,
+    it.subject,
+    it.message,
+    it.response,
+    b.id,
+    b.vp_id,
+    vp.title,
+    vp.description,
+    vp.start_date,
+    vp.end_date,
+    vp.price,
+    c.user_id,
+    u.username
+FROM 
+    inquiry_table it
+JOIN 
+    bookings b ON it.customer_id = b.customer_id
+JOIN 
+    vp ON b.vp_id = vp.vp_id
+JOIN 
+    customers c ON b.customer_id = c.customer_id
+JOIN 
+    users u ON c.user_id = u.user_id
+WHERE 
+    vp.travel_agency_id = (
+        SELECT 
+            travel_agency_id
+        FROM 
+            travel_agencies
+        WHERE 
+            travel_agency_id = $travel_agency_id
+    )
+ORDER BY 
+    it.created_at DESC;
+        ";
+        $stmt = $conn->prepare($sql_insert_inquiry);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}

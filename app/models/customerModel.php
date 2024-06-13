@@ -1,17 +1,15 @@
 <?php
-
 require "app/config/database.php";
-
 function getAllPackages()
 {
     try {
         $conn = connectDB();
-        $stmt = $conn->query("SELECT * FROM vp");
+        $stmt = $conn->query("SELECT *
+    FROM vp");
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $results;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
-        // Handle the exception gracefully, e.g., log the error or display a user-friendly message
     }
 }
 
@@ -20,9 +18,9 @@ function getCustomerid()
     try {
         $conn = connectDB();
         $user_id = $_SESSION["user"]['user_id'];
-        $sql_get_customer_id = "SELECT customer_id FROM customers WHERE user_id = ?";
+        $sql_get_customer_id = "SELECT customer_id FROM customers WHERE user_id = $user_id";
         $stmt = $conn->prepare($sql_get_customer_id);
-        $stmt->execute([$user_id]);
+        $stmt->execute();
         $customer_id = $stmt->fetch(PDO::FETCH_ASSOC);
         return $customer_id;
     } catch (PDOException $e) {
@@ -86,12 +84,12 @@ function getVpInfo()
     $conn = connectDB();
     $vp_id = $_GET['vp_id'];
     $query = "
-            SELECT DISTINCT s.description AS service_description, d.name AS destination_name
-            FROM vp_info vp
-            JOIN services s ON vp.services_id = s.service_id
-            JOIN destinations d ON vp.destination_id = d.destination_id
-            WHERE vp.vp_id = $vp_id
-        ";
+    SELECT DISTINCT s.description AS service_description, d.name AS destination_name
+    FROM vp_info vp
+    JOIN services s ON vp.services_id = s.service_id
+    JOIN destinations d ON vp.destination_id = d.destination_id
+    WHERE vp.vp_id = $vp_id
+    ";
     $stmt = $conn->query($query);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -104,9 +102,9 @@ function getBookings()
     $customer_id = getCustomerid();
     $id = $customer_id['customer_id'];
     $sql_fetch_bookings = "SELECT b.id,vp.vp_id, vp.title AS vacation_title, vp.start_date, vp.end_date,vp.price
-                       FROM bookings AS b
-                       INNER JOIN vp ON b.vp_id = vp.vp_id
-                       WHERE b.customer_id = $id";
+    FROM bookings AS b
+    INNER JOIN vp ON b.vp_id = vp.vp_id
+    WHERE b.customer_id = $id";
     $stmt = $conn->prepare($sql_fetch_bookings);
     $stmt->execute();
     $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -138,6 +136,11 @@ function getInquiry()
         $conn = connectDB();
         $customer_id_array = getCustomerid();
         $customer_id = $customer_id_array['customer_id'];
+        if (isset($_GET['vp_id'])) {
+            $vp_id = $_GET['vp_id'];
+        }
+        var_dump($vp_id);
+
         $sql_insert_inquiry = "SELECT * FROM inquiry_table where customer_id = $customer_id";
         $stmt = $conn->prepare($sql_insert_inquiry);
         $stmt->execute();
