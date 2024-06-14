@@ -111,36 +111,44 @@ function getBookings()
     return $bookings;
 }
 
-function createInquiry($subject, $message)
+function createInquiry($subject, $message, $vp_id)
 {
     try {
         $conn = connectDB();
         $customer_id = getCustomerid();
+
+        // Ensure customer_id is valid
+        if (!$customer_id) {
+            throw new Exception("Customer ID not found");
+        }
+
         $id = $customer_id['customer_id'];
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM vp WHERE vp_id = :vp_id");
+        $stmt->bindValue(':vp_id', $vp_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $vpExists = $stmt->fetchColumn();
 
-        $subject = $conn->quote($subject);
-        $message = $conn->quote($message);
-
-        $sql_insert_inquiry = "INSERT INTO inquiry_table (customer_id, subject, message) VALUES ($id, $subject, $message)";
+        $sql_insert_inquiry = "INSERT INTO inquiry_table (customer_id, vp_id, subject, message) VALUES (:customer_id, :vp_id, :subject, :message)";
         $stmt = $conn->prepare($sql_insert_inquiry);
+
+        $stmt->bindValue(':customer_id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':vp_id', $vp_id, PDO::PARAM_INT);
+        $stmt->bindValue(':subject', $subject, PDO::PARAM_STR);
+        $stmt->bindValue(':message', $message, PDO::PARAM_STR);
         $result = $stmt->execute();
         return $result;
     } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+        echo "PDO Error: " . $e->getMessage();
         return false;
     }
 }
+
 function getInquiry()
 {
     try {
         $conn = connectDB();
         $customer_id_array = getCustomerid();
         $customer_id = $customer_id_array['customer_id'];
-        if (isset($_GET['vp_id'])) {
-            $vp_id = $_GET['vp_id'];
-        }
-        var_dump($vp_id);
-
         $sql_insert_inquiry = "SELECT * FROM inquiry_table where customer_id = $customer_id";
         $stmt = $conn->prepare($sql_insert_inquiry);
         $stmt->execute();
@@ -148,6 +156,20 @@ function getInquiry()
         return $result;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+function deleteInquiry($inquiry_id)
+{
+    try {
+        $conn = connectDB();
+        $sql = "DELETE FROM inquiry_table WHERE id = :inquiry_id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':inquiry_id', $inquiry_id, PDO::PARAM_INT);
+        $result = $stmt->execute();
+        return $result;
+    } catch (PDOException $e) {
+        echo "Database error: " . $e->getMessage();
         return false;
     }
 }

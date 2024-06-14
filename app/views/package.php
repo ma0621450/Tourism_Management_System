@@ -73,7 +73,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="inquiry">
+                <form method="POST" action="inquiry?vp_id=<?php echo $package['vp_id']; ?>">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Subject:</label>
                         <input type="text" name="subject" class="form-control" id="exampleInputEmail1"></input>
@@ -82,7 +82,7 @@
                         <label class="form-label">Message:</label>
                         <textarea type="text" rows="5" name="message" class="form-control"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
