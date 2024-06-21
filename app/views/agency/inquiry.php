@@ -1,7 +1,6 @@
-<?php
-require_once ("app/views/partials/header.php");
-?>
-<table class="table ">
+<?php require_once ("app/views/partials/header.php"); ?>
+
+<table class="table">
     <thead>
         <tr class="text-center">
             <th scope="col">Inquiry Id</th>
@@ -12,17 +11,17 @@ require_once ("app/views/partials/header.php");
         </tr>
     </thead>
     <tbody>
-
         <?php foreach ($inquiries as $inquiry): ?>
             <tr class="text-center">
                 <td><?php echo htmlspecialchars($inquiry['id']); ?></td>
                 <td><?php echo htmlspecialchars($inquiry['subject']); ?></td>
                 <td><?php echo htmlspecialchars($inquiry['message']); ?></td>
-                <td>
+                <td class="response-column">
                     <?php if (!$inquiry['response']): ?>
-                        <form class="d-flex flex-column align-items-center justify-content-center w-auto" method="post">
+                        <form class="response-form d-flex flex-column align-items-center justify-content-center w-auto"
+                            data-inquiry-id="<?php echo htmlspecialchars($inquiry['id']); ?>">
                             <input type="hidden" name="inquiry_id" value="<?php echo htmlspecialchars($inquiry['id']); ?>">
-                            <textarea class="form-control" rows="1" name="response"></textarea>
+                            <textarea class="form-control response-textarea" rows="1" name="response"></textarea>
                             <button type="submit" class="btn btn-primary mt-2">Send Response</button>
                         </form>
                     <?php else: ?>
@@ -30,11 +29,44 @@ require_once ("app/views/partials/header.php");
                     <?php endif; ?>
                 </td>
                 <td>
-                    <a
-                        href="single_package?vp_id=<?php echo htmlspecialchars($inquiry['vp_id']); ?>"><?php echo htmlspecialchars($inquiry['vp_id']); ?></a>
+                    <a href="single_package?vp_id=<?php echo htmlspecialchars($inquiry['vp_id']); ?>">
+                        <?php echo htmlspecialchars($inquiry['vp_id']); ?>
+                    </a>
                 </td>
             </tr>
         <?php endforeach; ?>
+    </tbody>
 </table>
 
-<?php require_once ("app/views/partials/footer.php") ?>
+<?php require_once ("app/views/partials/footer.php"); ?>
+
+<script>
+    $(document).ready(function () {
+        $('.response-form').on('submit', function (e) {
+            e.preventDefault();
+
+            var form = $(this);
+            var formData = {
+                inquiry_id: form.find('[name="inquiry_id"]').val(),
+                response: form.find('.response-textarea').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: 'a_inquiry',
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        form.closest('.response-column').html(formData.response);
+                    } else {
+                        console.error('Error:', data.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error sending response:', error);
+                }
+            });
+        });
+    });
+</script>

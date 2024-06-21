@@ -1,4 +1,5 @@
-<?php require ("app/models/agencyModel.php");
+<?php
+require_once ("app/models/agencyModel.php");
 
 $inquiries = getInquiries();
 
@@ -7,8 +8,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response = htmlspecialchars($_POST['response']);
 
     $result = inquiryResponse($inquiry_id, $response);
+
+    if ($result) {
+        $responseMessage = 'Response sent successfully.';
+    } else {
+        $responseMessage = 'Failed to send response.';
+    }
+
+    $jsonResponse = [
+        'success' => $result,
+        'message' => $responseMessage
+    ];
+
+    header('Content-Type: application/json');
+    echo json_encode($jsonResponse);
+    exit;
 }
 
-
-?>
-<?php require ("app/views/agency/inquiry.php"); ?>
+require_once ("app/views/agency/inquiry.php");

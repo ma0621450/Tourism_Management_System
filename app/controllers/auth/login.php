@@ -1,31 +1,50 @@
 <?php
+
 require 'app/models/auth/login.php';
+require 'app/validator/Validator.php';
 
 
+$errors = [];
+$input = $_POST;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $user = authenticateUser($email, $password);
-    if (!$user) {
-
-        echo "Invalid email or password";
-    } else {
-        $_SESSION["user"]['user_id'] = $user['user_id'];
-        $_SESSION["user"]['role_id'] = $user['role_id'];
-        $_SESSION["user"]['email'] = $user['email'];
-
-        if ($user['role_id'] == 1) {
-            header('location: admin');
-        } else if ($user['role_id'] == 2) {
-            header('location: Agency_Packages');
-        } else if ($user['role_id'] == 3 || !$role) {
-            header('location: /Vacation_Management/');
-        }
-
+    if (!Validator::email($email)) {
+        $errors['email'] = 'Please provide a valid email address.';
     }
 
+    if (!Validator::string($password, 7, 255)) {
+        $errors['password'] = 'Please provide a password of at least 7 characters.';
+    }
+
+    if (empty($errors)) {
+        $user = authenticateUser($email, $password);
+
+        if (!$user) {
+            $errors['general'] = "Invalid email or password.";
+        } else {
+            $_SESSION["user"] = [
+                'user_id' => $user['user_id'],
+                'role_id' => $user['role_id'],
+                'email' => $user['email']
+            ];
+
+            $redirectUrl = '/Vacation_Management/';
+            if ($user['role_id'] == 1) {
+                $redirectUrl = 'admin';
+            } else if ($user['role_id'] == 2) {
+                $redirectUrl = 'Agency_Packages';
+            }
+
+            echo json_encode(['success' => true, 'redirect' => $redirectUrl]);
+            exit;
+        }
+    }
+
+    echo json_encode(['success' => false, 'errors' => $errors]);
+    exit;
 }
 
 require 'app/views/login.php';

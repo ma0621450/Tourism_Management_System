@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $inquiry_id = intval($_POST['inquiry_id']);
 
         try {
-            // Call delete function from model
             $result = deleteInquiry($inquiry_id);
 
             if ($result) {

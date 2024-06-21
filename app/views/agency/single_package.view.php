@@ -1,4 +1,5 @@
 <?php require_once ("app/views/partials/header.php");
+
 ?>
 
 <div class="container">
@@ -77,11 +78,14 @@
                     <input type="hidden" name="vp_id" id="vp_id" value="<?php echo $package['vp_id']; ?>">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Title</label>
-                        <input type="text" name="title" class="form-control" id="exampleInputEmail1">
+                        <input type="text" name="title" class="form-control" id="exampleInputEmail1"
+                            value="<?php echo htmlspecialchars($package['title']) ?>">
+
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Description</label>
-                        <textarea type="text" name="description" class="form-control"></textarea>
+                        <textarea type="text" name="description" rows="5" class="form-control"
+                            value=""><?php echo htmlspecialchars($package['description']) ?></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="">Services</label>
@@ -104,19 +108,23 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Persons</label>
-                        <input type="number" name="persons" class="form-control">
+                        <input value="<?php echo htmlspecialchars($package['persons']) ?>" type="number" name="persons"
+                            class="form-control">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Price</label>
-                        <input type="number" name="price" class="form-control">
+                        <input value="<?php echo htmlspecialchars($package['price']) ?>" type="number" name="price"
+                            class="form-control">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Start Date</label>
-                        <input type="date" name="start_date" class="form-control">
+                        <input value="<?php echo htmlspecialchars($package['start_date']) ?>" type="date"
+                            name="start_date" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">End Date</label>
-                        <input type="date" name="end_date" class="form-control">
+                        <input type="date" name="end_date" class="form-control"
+                            value="<?php echo htmlspecialchars($package['end_date']) ?>">
                     </div>
                     <button type="submit" class="btn btn-primary">Update Package</button>
                 </form>
@@ -124,3 +132,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#updatePackageForm').on('submit', function (e) {
+            e.preventDefault();
+
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: 'single_package',
+                method: 'post',
+                data: formData,
+                success: function (response) {
+                    console.log('Package updated successfully!');
+                    window.location.href = "single_package?vp_id=" + $('#vp_id').val();
+                },
+                error: function () {
+                    console.error('An error occurred while updating the package. Please try again.');
+                }
+            });
+        });
+    });
+</script>

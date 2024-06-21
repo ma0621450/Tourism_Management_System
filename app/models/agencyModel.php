@@ -149,6 +149,16 @@ ORDER BY
     }
 }
 
+function deleteAgencyBooking($bookingId)
+{
+    $conn = connectDB();
+
+    $stmt = $conn->prepare("DELETE FROM bookings WHERE id = :id");
+    $stmt->bindParam(':id', $bookingId, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+
 
 function getInquiries()
 {
@@ -202,7 +212,6 @@ function inquiryResponse($inquiry_id, $response)
         echo 'Failed to send response' . $e->getMessage();
     }
 }
-
 
 function updatePackage($vp_id, $title, $description, $services, $destinations, $persons, $price, $start_date, $end_date)
 {
@@ -259,7 +268,7 @@ function updatePackage($vp_id, $title, $description, $services, $destinations, $
         $stmt->execute();
         $current_vp_info = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Determine if the new services and destinations are provided
+        //if the new services and destinations are provided
         if (empty($services) && !empty($current_vp_info)) {
             $services = array_unique(array_column($current_vp_info, 'services_id'));
         }
@@ -285,7 +294,7 @@ function updatePackage($vp_id, $title, $description, $services, $destinations, $
 
         $stmt = $conn->prepare($sql_insert_vp_info);
 
-        // Insert all combinations of services and destinations
+        //Inserting all services and destinations
         foreach ($services as $service_id) {
             foreach ($destinations as $destination_id) {
                 $stmt->bindParam(':vp_id', $vp_id);

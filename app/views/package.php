@@ -63,8 +63,6 @@
 <?php require_once ("app/views/partials/footer.php"); ?>
 
 
-
-
 <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -73,7 +71,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="inquiry?vp_id=<?php echo $package['vp_id']; ?>">
+                <div id="errorContainer" class="alert alert-danger" style="display:none;"></div>
+                <form id="inquiryForm" action="inquiry?vp_id=<?php echo $package['vp_id']; ?>">
+
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Subject:</label>
                         <input type="text" name="subject" class="form-control" id="exampleInputEmail1"></input>
@@ -88,3 +88,66 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#updatePackageForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent the form from submitting normally
+            let form = $(this).serialize();
+
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'post',
+                data: form,
+                dataType: 'json',
+                success: function (response) {
+                    $('#errorContainer').hide().html(''); // Clear previous errors
+                    if (response.success) {
+                        $('#errorContainer').removeClass('alert-danger').addClass('alert-success').html('<p>Package updated successfully!</p>').show();
+                        setTimeout(function () {
+                            window.location.href = "single_package?vp_id=" + <?php echo $package['vp_id']; ?>; // Redirect after a short delay
+                        }, 2000);
+                    } else {
+                        $('#errorContainer').removeClass('alert-success').addClass('alert-danger');
+                        for (let error in response.errors) {
+                            $('#errorContainer').append('<p>' + response.errors[error] + '</p>');
+                        }
+                        $('#errorContainer').show();
+                    }
+                },
+                error: function () {
+                    $('#errorContainer').removeClass('alert-success').addClass('alert-danger').html('<p>An unexpected error occurred. Please try again.</p>').show();
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $('#inquiryForm').on('submit', function (e) {
+            e.preventDefault();
+            let form = $(this).serialize();
+
+            $.ajax({
+                url: $(this).attr('action'), // Assuming the form action is set to "inquiry?vp_id=<?php echo $package['vp_id']; ?>"
+                method: 'post',
+                data: form,
+                dataType: 'json',
+                success: function (response) {
+                    $('#errorContainer').hide().html(''); // Clear previous errors
+                    if (response.success) {
+                        $('#errorContainer').removeClass('alert-danger').addClass('alert-success').html('<p>Inquiry submitted successfully!</p>').show();
+                    } else {
+                        $('#errorContainer').removeClass('alert-success').addClass('alert-danger');
+                        for (let error in response.errors) {
+                            $('#errorContainer').append('<p>' + response.errors[error] + '</p>');
+                        }
+                        $('#errorContainer').show();
+                    }
+                },
+                error: function () {
+                    $('#errorContainer').removeClass('alert-success').addClass('alert-danger').html('<p>An unexpected error occurred. Please try again.</p>').show();
+                }
+            });
+        });
+    });
+</script>

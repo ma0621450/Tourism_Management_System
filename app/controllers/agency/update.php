@@ -1,7 +1,6 @@
 <?php
 
 require_once ("app/models/agencyModel.php");
-var_dump($_POST);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $vp_id = $_POST["vp_id"];
@@ -18,9 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result) {
         echo "successful";
-        header("location: single_package?vp_id=$vp_id");
     } else {
         echo "failed";
     }
 
 }
+

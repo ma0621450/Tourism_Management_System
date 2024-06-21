@@ -111,13 +111,21 @@ function getBookings()
     return $bookings;
 }
 
+function deleteBooking($bookingId)
+{
+    $conn = connectDB();
+    $stmt = $conn->prepare("DELETE FROM bookings WHERE id = :id");
+    $stmt->bindParam(':id', $bookingId, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+
 function createInquiry($subject, $message, $vp_id)
 {
     try {
         $conn = connectDB();
         $customer_id = getCustomerid();
 
-        // Ensure customer_id is valid
         if (!$customer_id) {
             throw new Exception("Customer ID not found");
         }

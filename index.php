@@ -3,6 +3,8 @@
 
 session_start();
 
+
+
 require 'Router.php';
 $router = new Router();
 

@@ -2,7 +2,7 @@
 require_once ("app/models/agencyModel.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data
+
     $title = $_POST["title"];
     $description = $_POST["description"];
     $services = $_POST["services"];
