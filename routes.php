@@ -95,3 +95,11 @@ $router->get('admin_bookings', 'app/controllers/admin/bookings.php', function ()
     authenticate();
     authorize(1);
 });
+$router->get('add_services', 'app/controllers/admin/services.php', function () {
+    authenticate();
+    authorize(1);
+});
+$router->get('add_destinations', 'app/controllers/admin/destinations.php', function () {
+    authenticate();
+    authorize(1);
+});

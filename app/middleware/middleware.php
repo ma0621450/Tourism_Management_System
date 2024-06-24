@@ -3,7 +3,6 @@
 function authenticate()
 {
     if (!isset($_SESSION['user'])) {
-        header('location: login');
         return false;
     }
     return true;

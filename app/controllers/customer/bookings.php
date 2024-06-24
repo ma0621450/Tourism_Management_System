@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'])) {
 
 
 $bookings = getBookings();
-if ($bookings) {
-    require ("app/views/bookings.php");
-} else {
-    echo "No Bookings";
-}
+// if ($bookings) {
+require ("app/views/bookings.php");
+// } else {
+//     echo "No Bookings";
+// }

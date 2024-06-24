@@ -1,7 +1,9 @@
 <?php
 require ("app/views/partials/header.php"); ?>
-<button class="m-1 btn btn-info" id="toggleTable1">Users</button>
-<button class="m-1 btn btn-info" id="toggleTable2">Travel Agencies</button>
+<div class="d-flex justify-content-center ">
+    <button class="m-1 btn btn-success" id="toggleTable1">Users</button>
+    <button class="m-1 btn btn-success" id="toggleTable2">Travel Agencies</button>
+</div>
 <table class="table table-bordered  table-secondary table-striped " id="myTable">
     <caption class="text-center p-3">ALL CUSTOMERS</caption>
     <thead>
@@ -45,7 +47,7 @@ require ("app/views/partials/header.php"); ?>
             <td><?php echo $agency['username'] ?></td>
             <td><?php echo $agency['email'] ?></td>
             <td><?php echo $agency['phone_number'] ?></td>
-            <td> <a href="admin_package?user_id=<?php echo $agency['user_id'] ?>" type="button" class="btn btn-primary">
+            <td> <a href="admin_package?user_id=<?php echo $agency['user_id'] ?>" type="button" class="btn ">
                     View Packages
                 </a>
                 <a class="btn btn-danger">Delete</a>

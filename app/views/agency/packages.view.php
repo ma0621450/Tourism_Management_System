@@ -1,9 +1,12 @@
 <?php
 require ("app/views/partials/header.php");
 ?>
-<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Create Packages
-</button>
+<div class="m-4">
+
+    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Create Packages
+    </button>
+</div>
 <div class="packages-cards d-flex justify-content-around">
     <?php foreach ($packages as $package): ?>
 

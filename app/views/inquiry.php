@@ -29,6 +29,9 @@ require_once ("app/views/partials/header.php");
                 </td>
             </tr>
         <?php } ?>
+        <?php if (empty($inquiries)): ?>
+            <h3>No Inquiries</h3>
+        <?php endif ?>
     </tbody>
 </table>
 <?php require_once ("app/views/partials/footer.php"); ?>

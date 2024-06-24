@@ -22,6 +22,9 @@
                         onclick="deleteAgencyBooking(event, <?php echo $booking['id']; ?>)">Cancel</button></td>
             </tr>
         <?php endforeach; ?>
+        <?php if (empty($bookings)): ?>
+            <h3>No Bookings</h3>
+        <?php endif ?>
     </tbody>
 </table>
 

@@ -35,6 +35,9 @@
                 </td>
             </tr>
         <?php endforeach; ?>
+        <?php if (empty($inquiries)): ?>
+            <h3>No Inquiry</h3>
+        <?php endif ?>
     </tbody>
 </table>
 

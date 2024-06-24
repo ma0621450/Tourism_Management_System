@@ -1,64 +1,119 @@
 <?php require_once ("app/views/partials/header.php");
 ?>
 <div class="container">
-    <div class="row">
-        <div class="col-lg-4">
-            <img width="1080px" src="https://media.tacdn.com/media/attractions-content--1x-1/12/85/9e/df.jpg"
-                class="img-fluid d-block mx-auto" alt="Package Image" style="object-fit-cover">
+    <div class="d-flex border  align-items-center" style="gap: 20px;">
+        <div>
+            <img width="900px"
+                src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/f5/de/london.jpg?w=1400&h=1400&s=1"
+                class="" alt="Package Image">
         </div>
-        <div class="col-lg-8">
-            <div class="mb-4">
-                <h1><?php echo $package['title']; ?></h1>
-                <p>Description: <?php echo $package['description']; ?></p>
-                <p>Price: $<?php echo $package['price']; ?></p>
-                <p>Start Date: <?php echo $package['start_date']; ?></p>
-                <p>End Date: <?php echo $package['end_date']; ?></p>
+        <div class="">
+            <h1 class="text-decoration-underline"><?php echo $package['title']; ?></h1>
+            <p class=" "><?php echo $package['description']; ?></p>
+
+        </div>
+    </div>
+    <h2 style="margin-left: 30px;" class="mt-5 text-decoration-underline">Reviews</h2>
+    <div class="d-flex">
+        <div style="width: 250px;height: 300px;"
+            class="m-4 p-3 border border-2 rounded-4 border-muted d-flex flex-column align-items-center text-center ">
+            <img width="160px"
+                src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
+                class="rounded-circle border" alt="...">
+            <div class="card-body p-2">
+                <h3>John Smith</h3>
+                <p class="card-text fw-bold">Lorem ipsum tempore optio recusandae
+                    itaque natus.Lorem ipsum tempore optio recusandae
+                    itaque natus.</p>
             </div>
+        </div>
+        <div style="width: 250px;height: 300px;"
+            class="m-4 p-3 border border-2 rounded-4 border-muted d-flex flex-column align-items-center text-center ">
+            <img width="160px"
+                src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
+                class="rounded-circle border" alt="...">
+            <div class="card-body p-2">
+                <h3>John Smith</h3>
+                <p class="card-text fw-bold">Lorem ipsum tempore optio recusandae
+                    itaque natus.Lorem ipsum tempore optio recusandae
+                    itaque natus.</p>
+            </div>
+        </div>
+        <div style="width: 250px;height: 300px;"
+            class="m-4 p-3 border border-2 rounded-4 border-muted d-flex flex-column align-items-center text-center ">
+            <img width="160px"
+                src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
+                class="rounded-circle border" alt="...">
+            <div class="card-body p-2">
+                <h3>John Smith</h3>
+                <p class="card-text fw-bold">Lorem ipsum tempore optio recusandae
+                    itaque natus.Lorem ipsum tempore optio recusandae
+                    itaque natus.</p>
+            </div>
+        </div>
+        <div>
+            <div class="border py-5 px-4 mx-5">
+                <h3 class="text-decoration-underline">Package Details</h3>
+                <p class="fw-bold">Price: $<?php echo $package['price']; ?></p>
+                <p class="fw-bold">Start Date: <?php echo $package['start_date']; ?></p>
+                <p class="fw-bold">End Date: <?php echo $package['end_date']; ?></p>
 
-            <h2>Destinations</h2>
-            <ul>
-                <?php
-                $visitedDestinations = [];
 
-                foreach ($vp_info as $info):
-                    if (!in_array($info['destination_name'], $visitedDestinations)):
-                        ?>
-                        <li><?php echo $info['destination_name']; ?></li>
-                        <?php
-                        $visitedDestinations[] = $info['destination_name'];
-                    endif;
-                endforeach;
-                ?>
-            </ul>
 
-            <h2>Services</h2>
-            <ul>
-                <?php
-                $visitedServices = [];
 
-                foreach ($vp_info as $info):
-                    if (!in_array($info['service_description'], $visitedServices)):
-                        ?>
-                        <li><?php echo $info['service_description']; ?></li>
-                        <?php
-                        $visitedServices[] = $info['service_description'];
-                    endif;
-                endforeach;
-                ?>
-            </ul>
-            <div class="d-flex align-items-center">
 
-                <form method="POST">
-                    <button class='btn btn-primary'>BOOK NOW</button>
-                </form>
-                <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Inquiry
-                </button>
+                <h3 class="text-decoration-underline">Destinations</h3>
+                <ul>
+                    <?php
+                    $visitedDestinations = [];
+
+                    foreach ($vp_info as $info):
+                        if (!in_array($info['destination_name'], $visitedDestinations)):
+                            ?>
+                            <li class="fw-bold"><?php echo $info['destination_name']; ?></li>
+                            <?php
+                            $visitedDestinations[] = $info['destination_name'];
+                        endif;
+                    endforeach;
+                    ?>
+                </ul>
+
+
+                <h3 class="text-decoration-underline">Services</h3>
+                <ul>
+                    <?php
+                    $visitedServices = [];
+
+                    foreach ($vp_info as $info):
+                        if (!in_array($info['service_description'], $visitedServices)):
+                            ?>
+                            <li class="fw-bold"><?php echo $info['service_description']; ?></li>
+                            <?php
+                            $visitedServices[] = $info['service_description'];
+                        endif;
+                    endforeach;
+                    ?>
+                </ul>
+                </li>
+                </ul>
+
+                <div class="d-flex align-items-center">
+
+                    <form method="POST">
+                        <button class='btn btn-primary'>BOOK NOW</button>
+                    </form>
+                    <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Inquiry
+                    </button>
+                </div>
             </div>
 
         </div>
     </div>
+
 </div>
+
 
 <?php require_once ("app/views/partials/footer.php"); ?>
 

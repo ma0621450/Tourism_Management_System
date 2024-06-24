@@ -13,6 +13,7 @@
         </tr>
     </thead>
     <tbody>
+
         <?php foreach ($bookings as $booking): ?>
             <tr id="booking-<?php echo $booking['id']; ?>">
                 <td><?php echo $booking['id']; ?></td>
@@ -27,6 +28,9 @@
                 </td>
             </tr>
         <?php endforeach; ?>
+        <?php if (empty($bookings)): ?>
+            <h1>No Bookings</h1>
+        <?php endif ?>
     </tbody>
 </table>
 
