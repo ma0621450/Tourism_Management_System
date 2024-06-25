@@ -181,3 +181,34 @@ function deleteInquiry($inquiry_id)
         return false;
     }
 }
+
+function updateUsernameAndPassword($new_username, $hashed_password)
+{
+    try {
+        $conn = connectDB();
+        $user_id = $_SESSION["user"]['user_id'];
+        $sql_update_user = "UPDATE users SET username = :username, password = :password WHERE user_id = $user_id";
+        $stmt_user = $conn->prepare($sql_update_user);
+        $stmt_user->bindParam(':username', $new_username, PDO::PARAM_STR);
+        $stmt_user->bindParam(':password', $hashed_password, PDO::PARAM_STR);
+        $stmt_user->execute();
+        return true;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+function fetchUserInfo()
+{
+    $user_id = $_SESSION['user']['user_id'];
+    $conn = connectDB();
+    $queryUser = "SELECT username FROM users WHERE user_id = :user_id";
+    $stmtUser = $conn->prepare($queryUser);
+    $stmtUser->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmtUser->execute();
+    $user = $stmtUser->fetch(PDO::FETCH_ASSOC);
+
+    return [
+        'username' => $user['username'] ?? ''
+    ];
+}

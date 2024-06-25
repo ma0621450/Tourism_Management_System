@@ -88,6 +88,9 @@ $role = isset($_SESSION['user']['role_id']) ? $_SESSION['user']['role_id'] : nul
                             <li class="nav-item">
                                 <a class="nav-item nav-link active" aria-current="page" href="a_inquiry">Inquiries</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-item nav-link active" aria-current="page" href="agency_profile">Your Profile</a>
+                            </li>
                         <?php } ?>
 
                         <?php if ($role == 3) { ?>
@@ -96,6 +99,9 @@ $role = isset($_SESSION['user']['role_id']) ? $_SESSION['user']['role_id'] : nul
                             </li>
                             <li class="nav-item">
                                 <a class="nav-item nav-link active" aria-current="page" href="inquiry">Inquiries</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-item nav-link active" aria-current="page" href="user_profile">Your Profile</a>
                             </li>
                         <?php } ?>
 

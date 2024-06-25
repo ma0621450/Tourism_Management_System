@@ -1,0 +1,12 @@
+.limited-description {
+  max-height: 3em; /* Adjust this value to control the number of rows */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis (...) when content is truncated */
+  /* Ensure proper line wrapping */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  /* Optional: Add some padding and margin for better aesthetics */
+  padding-right: 1em;
+  margin-right: -1em;
+}

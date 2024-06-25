@@ -50,6 +50,14 @@ $router->post('delete_agency_booking', 'app/controllers/agency/bookings.php', fu
     authenticate();
     authorize(2);
 });
+$router->get('agency_profile', 'app/controllers/agency/profile.php', function () {
+    authenticate();
+    authorize(2);
+});
+$router->post('agency_profile', 'app/controllers/agency/profile.php', function () {
+    authenticate();
+    authorize(2);
+});
 
 $router->get('package', 'app/controllers/customer/package.php', function () {
     authenticate();
@@ -82,6 +90,14 @@ $router->post('delete_inquiry', 'app/controllers/customer/delete_inquiry.php', f
     authenticate();
     authorize(3);
 });
+$router->get('user_profile', 'app/controllers/customer/profile.php', function () {
+    authenticate();
+    authorize(3);
+});
+$router->post('user_profile', 'app/controllers/customer/profile.php', function () {
+    authenticate();
+    authorize(3);
+});
 
 $router->get('admin', 'app/controllers/admin/index.php', function () {
     authenticate();
@@ -96,6 +112,10 @@ $router->get('admin_bookings', 'app/controllers/admin/bookings.php', function ()
     authorize(1);
 });
 $router->get('add_services', 'app/controllers/admin/services.php', function () {
+    authenticate();
+    authorize(1);
+});
+$router->post('add_services', 'app/controllers/admin/services.php', function () {
     authenticate();
     authorize(1);
 });

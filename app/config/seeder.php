@@ -1,4 +1,4 @@
-<!-- require ("database.php");
+require ("database.php");
 $conn = connectDB();
 
 
@@ -39,7 +39,6 @@ $conn->exec($sql_users);
 echo "Table users created successfully<br>";
 
 $adminPass = password_hash('admin123', PASSWORD_DEFAULT);
-
 // Creating super_admin
 $sql_create_admin = "INSERT INTO `users` (`username`, `email`, `password`, `role_id`, `phone_number`)
 VALUES ('admin', 'admin@gmail.com', '$adminPass', 1, '')";
@@ -163,18 +162,18 @@ echo "Table vp_info created successfully<br>";
 
 // Query to insert destinations
 $sqlDestinations = "
-    INSERT INTO destinations (destination_id, name)
-    VALUES
-        (1, 'Paris'),
-        (2, 'New York'),
-        (3, 'Tokyo'),
-        (4, 'London'),
-        (5, 'Rome'),
-        (6, 'Sydney'),
-        (7, 'Dubai'),
-        (8, 'Cairo'),
-        (9, 'Rio de Janeiro'),
-        (10, 'Moscow')
+INSERT INTO destinations (destination_id, name)
+VALUES
+(1, 'Paris'),
+(2, 'New York'),
+(3, 'Tokyo'),
+(4, 'London'),
+(5, 'Rome'),
+(6, 'Sydney'),
+(7, 'Dubai'),
+(8, 'Cairo'),
+(9, 'Rio de Janeiro'),
+(10, 'Moscow')
 ";
 
 // Execute the query
@@ -182,22 +181,19 @@ $conn->exec($sqlDestinations);
 
 // Query to insert services
 $sqlServices = "
-    INSERT INTO services (service_id, description)
-    VALUES
-        (1, 'City Tour'),
-        (2, 'Airport Transfer'),
-        (3, 'Hotel Accommodation'),
-        (4, 'Guided Excursions'),
-        (5, 'Cruise Package'),
-        (6, 'Adventure Activities'),
-        (7, 'Dining Experience'),
-        (8, 'Shopping Tour'),
-        (9, 'Cultural Events'),
-        (10, 'Nightlife Entertainment')
+INSERT INTO services (service_id, description)
+VALUES
+(1, 'City Tour'),
+(2, 'Airport Transfer'),
+(3, 'Hotel Accommodation'),
+(4, 'Guided Excursions'),
+(5, 'Cruise Package'),
+(6, 'Adventure Activities'),
+(7, 'Dining Experience'),
+(8, 'Shopping Tour'),
+(9, 'Cultural Events'),
+(10, 'Nightlife Entertainment')
 ";
 
 // Execute the query
 $conn->exec($sqlServices);
-?>
-
--->

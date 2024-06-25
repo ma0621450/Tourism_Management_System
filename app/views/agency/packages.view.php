@@ -17,7 +17,7 @@ require ("app/views/partials/header.php");
                 <a href="single_package?vp_id=<?php echo $package['vp_id']; ?>" class="card-link">
                     <h5 class="card-title"><?php echo $package['title']; ?></h5>
                 </a>
-                <p class="card-text"><?php echo $package['description']; ?></p>
+                <p class="card-text limited-description"><?php echo $package['description']; ?></p>
                 <p class="text-secondary">Price: $<?php echo $package['price']; ?></p>
             </div>
         </div>

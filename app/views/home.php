@@ -10,7 +10,7 @@ require ("app/views/partials/header.php");
                 class="card-img-top" alt="...">
             <div class="card-body p-2">
                 <h5 class="card-title"><?php echo $package['title'] ?></h5>
-                <p class="card-text"><?php echo $package['description'] ?></p>
+                <p class="card-text limited-description"><?php echo $package['description'] ?></p>
                 <a href="package?vp_id=<?php echo $package['vp_id']; ?>" type="button" class="btn btn-primary">
                     View More Details
                 </a>

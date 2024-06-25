@@ -310,3 +310,53 @@ function updatePackage($vp_id, $title, $description, $services, $destinations, $
         echo "Failed to update vacation package: " . $e->getMessage();
     }
 }
+
+function updateUser($username, $hashed_password)
+{
+    $conn = connectDB();
+    $user_id = $_SESSION['user']['user_id'];
+    $query = "UPDATE users SET username = :username, password = :password WHERE user_id = :user_id";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $hashed_password);
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $result = $stmt->execute();
+    return $result;
+}
+
+function updateAgency($agency_name, $agency_desc)
+{
+    $conn = connectDB();
+    $user_id = $_SESSION['user']['user_id'];
+    $query = "UPDATE travel_agencies SET agency_name = :agency_name, agency_desc = :agency_desc WHERE user_id = :user_id";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':agency_name', $agency_name);
+    $stmt->bindParam(':agency_desc', $agency_desc);
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $result = $stmt->execute();
+    return $result;
+}
+
+function fetchUserInfo()
+{
+    $user_id = $_SESSION['user']['user_id'];
+    $conn = connectDB();
+
+    $queryUser = "SELECT username FROM users WHERE user_id = :user_id";
+    $stmtUser = $conn->prepare($queryUser);
+    $stmtUser->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmtUser->execute();
+    $user = $stmtUser->fetch(PDO::FETCH_ASSOC);
+
+    $queryAgency = "SELECT agency_name, agency_desc FROM travel_agencies WHERE user_id = :user_id";
+    $stmtAgency = $conn->prepare($queryAgency);
+    $stmtAgency->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmtAgency->execute();
+    $agency = $stmtAgency->fetch(PDO::FETCH_ASSOC);
+
+    return [
+        'username' => $user['username'] ?? '',
+        'agency_name' => $agency['agency_name'] ?? '',
+        'agency_desc' => $agency['agency_desc'] ?? ''
+    ];
+}
