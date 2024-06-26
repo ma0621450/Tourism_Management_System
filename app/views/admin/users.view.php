@@ -22,7 +22,8 @@ require ("app/views/partials/header.php"); ?>
             <td><?php echo $customer['username'] ?></td>
             <td><?php echo $customer['email'] ?></td>
             <td><?php echo $customer['phone_number'] ?></td>
-            <td><a href="admin_bookings?user_id=<?php echo $customer['user_id'] ?>" type="button" class="btn btn-primary">
+            <td><a href="admin_bookings?user_id=<?php echo $customer['user_id'] ?>" type="button"
+                    class="btn btn-primary mx-1">
                     View Bookings
                 </a><a href="" class="btn btn-danger">Delete</a></td>
             </tr>
@@ -47,7 +48,7 @@ require ("app/views/partials/header.php"); ?>
             <td><?php echo $agency['username'] ?></td>
             <td><?php echo $agency['email'] ?></td>
             <td><?php echo $agency['phone_number'] ?></td>
-            <td> <a href="admin_package?user_id=<?php echo $agency['user_id'] ?>" type="button" class="btn ">
+            <td> <a href="admin_package?user_id=<?php echo $agency['user_id'] ?>" type="button" class="btn btn-primary ">
                     View Packages
                 </a>
                 <a class="btn btn-danger">Delete</a>

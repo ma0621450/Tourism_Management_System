@@ -1,7 +1,7 @@
 <?php require_once ("app/views/partials/header.php");
 ?>
 <div class="container">
-    <div class="d-flex border  align-items-center" style="gap: 20px;">
+    <div class="d-flex border rounded-4 align-items-center" style="gap: 20px;">
         <div>
             <img width="900px"
                 src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/f5/de/london.jpg?w=1400&h=1400&s=1"
@@ -13,6 +13,15 @@
 
         </div>
     </div>
+    <?php if ($package): ?>
+        <div style="width: 870px; margin-top: 40px;">
+            <h2 style="margin-left: 10px;" class="text-decoration-underline">About Travel Agency</h2>
+            <div class="border rounded-4 p-3">
+                <h5><?php echo $package['agency_name']; ?></h5>
+                <p><?php echo $package['agency_desc']; ?></p>
+            </div>
+        </div>
+    <?php endif ?>
     <h2 style="margin-left: 30px;" class="mt-5 text-decoration-underline">Reviews</h2>
     <div class="d-flex">
         <div style="width: 250px;height: 300px;"
@@ -51,8 +60,8 @@
                     itaque natus.</p>
             </div>
         </div>
-        <div>
-            <div class="border py-5 px-4 mx-5">
+        <div style="margin-top: -250px;">
+            <div class="border rounded-4 py-5 px-4 mx-5">
                 <h3 class="text-decoration-underline">Package Details</h3>
                 <p class="fw-bold">Price: $<?php echo $package['price']; ?></p>
                 <p class="fw-bold">Start Date: <?php echo $package['start_date']; ?></p>
@@ -148,7 +157,7 @@
 <script>
     $(document).ready(function () {
         $('#updatePackageForm').on('submit', function (e) {
-            e.preventDefault(); // Prevent the form from submitting normally
+            e.preventDefault();
             let form = $(this).serialize();
 
             $.ajax({
@@ -157,11 +166,11 @@
                 data: form,
                 dataType: 'json',
                 success: function (response) {
-                    $('#errorContainer').hide().html(''); // Clear previous errors
+                    $('#errorContainer').hide().html('');
                     if (response.success) {
                         $('#errorContainer').removeClass('alert-danger').addClass('alert-success').html('<p>Package updated successfully!</p>').show();
                         setTimeout(function () {
-                            window.location.href = "single_package?vp_id=" + <?php echo $package['vp_id']; ?>; // Redirect after a short delay
+                            window.location.href = "single_package?vp_id=" + <?php echo $package['vp_id']; ?>;
                         }, 2000);
                     } else {
                         $('#errorContainer').removeClass('alert-success').addClass('alert-danger');
@@ -183,12 +192,12 @@
             let form = $(this).serialize();
 
             $.ajax({
-                url: $(this).attr('action'), // Assuming the form action is set to "inquiry?vp_id=<?php echo $package['vp_id']; ?>"
+                url: $(this).attr('action'),
                 method: 'post',
                 data: form,
                 dataType: 'json',
                 success: function (response) {
-                    $('#errorContainer').hide().html(''); // Clear previous errors
+                    $('#errorContainer').hide().html('');
                     if (response.success) {
                         $('#errorContainer').removeClass('alert-danger').addClass('alert-success').html('<p>Inquiry submitted successfully!</p>').show();
                     } else {

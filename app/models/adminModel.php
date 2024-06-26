@@ -96,12 +96,52 @@ function getServices()
     $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $services;
 }
+function getDestinations()
+{
+    $conn = connectDB();
+    $query = "SELECT * FROM destinations";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $destinations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $destinations;
+}
 function addDestinations($d_name)
 {
     try {
         $conn = connectDB();
         $query = "INSERT INTO destinations (name) VALUES ('$d_name');";
         $stmt = $conn->prepare($query);
+        $results = $stmt->execute();
+        return $results;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+
+
+
+
+function delServices($service_id)
+{
+    try {
+        $conn = connectDB();
+        $query = "DELETE FROM services where service_id = :service_id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':service_id', $service_id, PDO::PARAM_INT);
+        $results = $stmt->execute();
+        return $results;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+function delDestination($destination_id)
+{
+    try {
+        $conn = connectDB();
+        $query = "DELETE FROM destinations where destination_id = :destination_id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':destination_id', $destination_id, PDO::PARAM_INT);
         $results = $stmt->execute();
         return $results;
     } catch (PDOException $e) {

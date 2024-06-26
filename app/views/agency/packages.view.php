@@ -7,15 +7,15 @@ require ("app/views/partials/header.php");
         Create Packages
     </button>
 </div>
-<div class="packages-cards d-flex justify-content-around">
+<div class="packages-cards d-flex flex-wrap justify-content-center">
     <?php foreach ($packages as $package): ?>
 
-        <div class="m-4 border  rounded border-muted border-2" style="width: 20rem;">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAh02ZiYBmSOMvLGUE3S22Tw-4Mbg_1Xpdg&s"
+        <div class="m-4 border rounded border-muted border-2" style="width: 22rem;">
+            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/f5/de/london.jpg?w=1400&h=1400&s=1"
                 class="card-img-top" alt="...">
             <div class="card-body p-2">
                 <a href="single_package?vp_id=<?php echo $package['vp_id']; ?>" class="card-link">
-                    <h5 class="card-title"><?php echo $package['title']; ?></h5>
+                    <h5 class="card-title text-decoration-underline"><?php echo $package['title']; ?></h5>
                 </a>
                 <p class="card-text limited-description"><?php echo $package['description']; ?></p>
                 <p class="text-secondary">Price: $<?php echo $package['price']; ?></p>

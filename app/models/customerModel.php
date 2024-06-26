@@ -67,17 +67,20 @@ function singlePackage()
 {
     if (isset($_GET['vp_id'])) {
         $vp_id = $_GET['vp_id'];
-
-
-
         $conn = connectDB();
-        $stmt = $conn->prepare("SELECT * FROM vp WHERE vp_id = $vp_id");
+        $stmt = $conn->prepare("
+            SELECT vp.*, ta.agency_name, ta.agency_desc 
+            FROM vp 
+            JOIN travel_agencies ta ON vp.travel_agency_id = ta.travel_agency_id 
+            WHERE vp.vp_id = :vp_id
+        ");
+
+        $stmt->bindParam(':vp_id', $vp_id, PDO::PARAM_INT);
         $stmt->execute();
-
-        return $package = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
+
 
 function getVpInfo()
 {
@@ -202,7 +205,7 @@ function fetchUserInfo()
 {
     $user_id = $_SESSION['user']['user_id'];
     $conn = connectDB();
-    $queryUser = "SELECT username FROM users WHERE user_id = :user_id";
+    $queryUser = "SELECT username, password FROM users WHERE user_id = :user_id";
     $stmtUser = $conn->prepare($queryUser);
     $stmtUser->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $stmtUser->execute();
@@ -211,4 +214,17 @@ function fetchUserInfo()
     return [
         'username' => $user['username'] ?? ''
     ];
+}
+
+function getTravelAgency()
+{
+    try {
+        $conn = connectDB();
+        $stmt = $conn->query("SELECT *
+    FROM vp");
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
 }

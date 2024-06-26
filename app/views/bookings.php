@@ -13,7 +13,6 @@
         </tr>
     </thead>
     <tbody>
-
         <?php foreach ($bookings as $booking): ?>
             <tr id="booking-<?php echo $booking['id']; ?>">
                 <td><?php echo $booking['id']; ?></td>
@@ -23,8 +22,8 @@
                 <td>$<?php echo $booking['price']; ?></td>
                 <td><a href="package?vp_id=<?php echo $booking['vp_id']; ?>">View Package</a></td>
                 <td>
-                    <button class="btn btn-danger"
-                        onclick="deleteBooking(event, <?php echo $booking['id']; ?>)">Delete</button>
+                    <button class="btn btn-danger delete-booking"
+                        data-booking-id="<?php echo $booking['id']; ?>">Delete</button>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -34,35 +33,36 @@
     </tbody>
 </table>
 
-<script>
-    function deleteBooking(event, bookingId) {
-        event.preventDefault();
-
-        if (!confirm('Are you sure you want to delete this booking?')) {
-            return;
-        }
-
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'delete_booking', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    document.getElementById('booking-' + bookingId).remove();
-                    alert('Booking deleted successfully.');
-                } else {
-                    alert('Failed to delete booking: ' + response.message);
-                }
-            } else {
-                alert('Request failed. Status: ' + xhr.status);
-            }
-        };
-        xhr.onerror = function () {
-            alert('Request failed. Please try again later.');
-        };
-        xhr.send('booking_id=' + bookingId);
-    }
-</script>
-
 <?php require ("app/views/partials/footer.php"); ?>
+
+<script>
+    $(document).ready(function () {
+        $('.delete-booking').on('click', function (event) {
+            event.preventDefault();
+
+            if (!confirm('Are you sure you want to delete this booking?')) {
+                return;
+            }
+
+            var bookingId = $(this).data('booking-id');
+
+            $.ajax({
+                type: 'POST',
+                url: 'delete_booking',
+                data: { booking_id: bookingId },
+                success: function (response) {
+                    console.log('Response:', response); // Log the response for debugging
+                    if (response.success) {
+                        $('#booking-' + bookingId).remove();
+                        alert('Booking deleted successfully.');
+                    } else {
+                        alert('Failed to delete booking: ' + response.message);
+                    }
+                },
+                error: function () {
+                    alert('Request failed. Please try again later.');
+                }
+            });
+        });
+    });
+</script>

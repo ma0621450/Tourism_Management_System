@@ -1,6 +1,5 @@
-<?php
-require_once ("app/views/partials/header.php");
-?>
+<?php require ("app/views/partials/header.php"); ?>
+
 <table class="table">
     <thead>
         <tr class="text-center">
@@ -8,6 +7,7 @@ require_once ("app/views/partials/header.php");
             <th scope="col">Subject</th>
             <th scope="col">Message</th>
             <th scope="col">Response</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -21,11 +21,13 @@ require_once ("app/views/partials/header.php");
                         <span class="text-secondary">No Response</span>
                     <?php } else { ?>
                         <span class="fw-bold"><?php echo htmlspecialchars($inquiry['response']); ?></span>
-                        <form class="d-inline" onsubmit="deleteInquiry(event, <?php echo htmlspecialchars($inquiry['id']); ?>)">
-                            <input type="hidden" name="inquiry_id" value="<?php echo htmlspecialchars($inquiry['id']); ?>">
+                    <td>
+                        <form class="d-inline delete-inquiry-form"
+                            data-inquiry-id="<?php echo htmlspecialchars($inquiry['id']); ?>">
                             <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                         </form>
-                    <?php } ?>
+                    </td>
+                <?php } ?>
                 </td>
             </tr>
         <?php } ?>
@@ -34,35 +36,37 @@ require_once ("app/views/partials/header.php");
         <?php endif ?>
     </tbody>
 </table>
-<?php require_once ("app/views/partials/footer.php"); ?>
+
+<?php require ("app/views/partials/footer.php"); ?>
 
 <script>
-    function deleteInquiry(event, inquiryId) {
-        event.preventDefault();
+    $(document).ready(function () {
+        $('.delete-inquiry-form').on('submit', function (event) {
+            event.preventDefault();
 
-        if (!confirm('Are you sure you want to delete this inquiry?')) {
-            return;
-        }
-
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'delete_inquiry', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    document.getElementById('inquiry-' + inquiryId).remove();
-                    alert('Inquiry deleted successfully.');
-                } else {
-                    alert('Failed to delete inquiry: ' + response.message);
-                }
-            } else {
-                alert('Request failed. Status: ' + xhr.status);
+            if (!confirm('Are you sure you want to delete this inquiry?')) {
+                return;
             }
-        };
-        xhr.onerror = function () {
-            alert('Request failed. Please try again later.');
-        };
-        xhr.send('inquiry_id=' + inquiryId);
-    }
+
+            var inquiryId = $(this).data('inquiry-id');
+
+            $.ajax({
+                type: 'POST',
+                url: 'delete_inquiry',
+                data: { inquiry_id: inquiryId },
+                success: function (response) {
+                    console.log('Response:', response);
+                    if (response.success) {
+                        $('#inquiry-' + inquiryId).remove();
+                        alert('Inquiry deleted successfully.');
+                    } else {
+                        alert('Failed to delete inquiry: ' + response.message);
+                    }
+                },
+                error: function () {
+                    alert('Request failed. Please try again later.');
+                }
+            });
+        });
+    });
 </script>

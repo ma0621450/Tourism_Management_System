@@ -33,8 +33,6 @@ function getAgencyIdFromUserId($user_id)
     }
 }
 
-
-
 function createPackage($title, $description, $services, $destinations, $persons, $price, $start_date, $end_date)
 {
     try {
@@ -311,14 +309,13 @@ function updatePackage($vp_id, $title, $description, $services, $destinations, $
     }
 }
 
-function updateUser($username, $hashed_password)
+function updateUser($username)
 {
     $conn = connectDB();
     $user_id = $_SESSION['user']['user_id'];
-    $query = "UPDATE users SET username = :username, password = :password WHERE user_id = :user_id";
+    $query = "UPDATE users SET username = :username  WHERE user_id = :user_id";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $hashed_password);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $result = $stmt->execute();
     return $result;
@@ -359,4 +356,12 @@ function fetchUserInfo()
         'agency_name' => $agency['agency_name'] ?? '',
         'agency_desc' => $agency['agency_desc'] ?? ''
     ];
+}
+function deletePackage($vp_id)
+{
+    $conn = connectDB();
+    $stmt = $conn->prepare("DELETE FROM vp WHERE vp_id = :vp_id");
+    $stmt->bindParam(':vp_id', $vp_id, PDO::PARAM_INT);
+    $result = $stmt->execute();
+    return $result;
 }

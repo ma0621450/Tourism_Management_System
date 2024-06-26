@@ -29,6 +29,10 @@ $router->post('single_package', 'app/controllers/agency/update.php', function ()
     authenticate();
     authorize(2);
 });
+$router->delete('single_package', 'app/controllers/agency/delete.php', function () {
+    authenticate();
+    authorize(2);
+});
 
 $router->post('Agency_Packages', 'app/controllers/agency/create.php', function () {
     authenticate();
@@ -119,7 +123,19 @@ $router->post('add_services', 'app/controllers/admin/services.php', function () 
     authenticate();
     authorize(1);
 });
+$router->delete('add_services', 'app/controllers/admin/delete.php', function () {
+    authenticate();
+    authorize(1);
+});
 $router->get('add_destinations', 'app/controllers/admin/destinations.php', function () {
+    authenticate();
+    authorize(1);
+});
+$router->post('add_destinations', 'app/controllers/admin/destinations.php', function () {
+    authenticate();
+    authorize(1);
+});
+$router->delete('add_destinations', 'app/controllers/admin/destination_delete.php', function () {
     authenticate();
     authorize(1);
 });

@@ -7,7 +7,8 @@ require ("app/views/partials/header.php"); ?>
 
             <th>Title</th>
             <th>Price</th>
-            <th>Actions</th>
+            <th>Start Date</th>
+            <th>End Date</th>
         </tr>
     </thead>
     <tbody>
@@ -15,7 +16,8 @@ require ("app/views/partials/header.php"); ?>
             ?>
             <td><?php echo $package['title'] ?></td>
             <td><?php echo $package['price'] ?></td>
-            <td><button class="btn btn-danger">Delete</button></td>
+            <td><?php echo $package['start_date'] ?></td>
+            <td><?php echo $package['end_date'] ?></td>
             </tr>
         <?php } ?>
     </tbody>

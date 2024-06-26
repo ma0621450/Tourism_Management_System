@@ -19,10 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if ($result) {
-        echo "successful";
 
-        // header("location: Agency_Packages");
-        // exit();
+        header("location: Agency_Packages");
+        exit();
 
     } else {
         echo "creation failed!";

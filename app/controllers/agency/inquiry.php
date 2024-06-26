@@ -1,8 +1,8 @@
 <?php
 require_once ("app/models/agencyModel.php");
+require_once ("app/validator/Validator.php");
 
 $inquiries = getInquiries();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inquiry_id = intval($_POST['inquiry_id']);
     $response = htmlspecialchars($_POST['response']);

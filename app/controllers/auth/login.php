@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user['role_id'] == 1) {
                 $redirectUrl = 'admin';
             } else if ($user['role_id'] == 2) {
-                $redirectUrl = 'Agency_Packages';
+                $redirectUrl = 'agency_profile';
             }
 
             echo json_encode(['success' => true, 'redirect' => $redirectUrl]);

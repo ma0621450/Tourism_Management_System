@@ -54,8 +54,14 @@
         <div class="d-flex align-items-center mt-4">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Update
                 Package</button>
-            <a class='btn btn-danger ms-2'>Delete</a>
+            <form method="POST" id="deletePackageForm" class="ms-2">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="vp_id" value="<?php echo $package['vp_id']; ?>">
+                <button type="submit" id="deletePackageButton" class="btn btn-danger">Delete</button>
+            </form>
         </div>
+
+
     </div>
 </div>
 
@@ -74,7 +80,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Package</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Package</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
