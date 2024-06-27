@@ -107,6 +107,14 @@ $router->get('admin', 'app/controllers/admin/index.php', function () {
     authenticate();
     authorize(1);
 });
+$router->delete('admin', 'app/controllers/admin/block.php', function () {
+    authenticate();
+    authorize(1);
+});
+$router->patch('admin', 'app/controllers/admin/unblock.php', function () {
+    authenticate();
+    authorize(1);
+});
 $router->get('admin_package', 'app/controllers/admin/package.php', function () {
     authenticate();
     authorize(1);

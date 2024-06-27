@@ -148,3 +148,33 @@ function delDestination($destination_id)
         echo "Error: " . $e->getMessage();
     }
 }
+
+
+function blockUser($user_id)
+{
+    try {
+        $conn = connectDB();
+        $query = "UPDATE users SET deleted_at = NOW() WHERE user_id = :user_id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $results = $stmt->execute();
+        return $results;
+
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+function unblockUser($user_id)
+{
+    try {
+        $conn = connectDB();
+        $query = "UPDATE users SET deleted_at = NULL WHERE user_id = :user_id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $results = $stmt->execute();
+        return $results;
+
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}

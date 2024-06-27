@@ -4,8 +4,11 @@ function getAllPackages()
 {
     try {
         $conn = connectDB();
-        $stmt = $conn->query("SELECT *
-    FROM vp");
+        $stmt = $conn->query("SELECT vp.*
+                              FROM vp
+                              JOIN travel_agencies ta ON vp.travel_agency_id = ta.travel_agency_id
+                              JOIN users u ON ta.user_id = u.user_id
+                              WHERE vp.deleted_at IS NULL AND u.deleted_at IS NULL");
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $results;
     } catch (PDOException $e) {

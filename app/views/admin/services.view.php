@@ -47,15 +47,6 @@
 
 <?php require ("app/views/partials/footer.php"); ?>
 
-<script>
-    $(document).ready(function () {
-        $('#servicesTable').DataTable({
-            "columnDefs": [
-                { "width": "10%", "targets": 0 },
-                { "width": "80%", "targets": 1 },
-                { "width": "10%", "targets": 2 }
-            ],
-            "autoWidth": false
-        });
-    });
+<script src="public/js/admin/services.js">
+
 </script>

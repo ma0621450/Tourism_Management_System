@@ -82,68 +82,7 @@
 
 <!-- Template Javascript -->
 <script src="public/assets/js/main.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#table').DataTable();
-    })
-    $(document).ready(function () {
-        // Function to destroy DataTable instances
-        function destroyDataTable(table) {
-            if ($.fn.DataTable.isDataTable(table)) {
-                $(table).DataTable().destroy();
-            }
-        }
 
-        // Toggle Table 1
-        $('#toggleTable1').click(function () {
-            $('#myTable').toggle();
-            $('#myTable caption').toggle();
-
-            if ($('#myTable').is(':visible')) {
-                if (!$.fn.DataTable.isDataTable('#myTable')) {
-                    $('#myTable').DataTable({
-                        // Add DataTable options if needed
-                    });
-                }
-            } else {
-                destroyDataTable('#myTable');
-            }
-
-            $('#myTable2').hide();
-            $('#myTable2 caption').hide();
-            destroyDataTable('#myTable2');
-        });
-
-        // Toggle Table 2
-        $('#toggleTable2').click(function () {
-            $('#myTable2').toggle();
-            $('#myTable2 caption').toggle();
-
-            if ($('#myTable2').is(':visible')) {
-                if (!$.fn.DataTable.isDataTable('#myTable2')) {
-                    $('#myTable2').DataTable({
-                        // Add DataTable options if needed
-                    });
-                }
-            } else {
-                destroyDataTable('#myTable2');
-            }
-
-            $('#myTable').hide();
-            $('#myTable caption').hide();
-            destroyDataTable('#myTable');
-        });
-
-        // Initial hide for tables and their captions
-        $('#myTable').hide();
-        $('#myTable2').hide();
-        $('#myTable caption').hide();
-        $('#myTable2 caption').hide();
-
-        // Center-align text in all columns of both tables
-        $('#myTable, #myTable2,#table').find('th, td').addClass('text-center');
-    });
-</script>
 </body>
 
 </html>

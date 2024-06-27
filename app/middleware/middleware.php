@@ -44,9 +44,9 @@ function getUserHomeRoute()
                 return 'Agency_Packages';
             case 3:
                 return '/Vacation_Management/';
-            default:
-                return '/Vacation_Management/';
         }
+    } else {
+        return '/Vacation_Management/';
     }
 }
 
